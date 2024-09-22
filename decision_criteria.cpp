@@ -3,7 +3,7 @@
  * @brief Implements decision-making criteria for profit matrices.
  *
  * This module contains functions that evaluate decision-making strategies
- * based on a matrix of profits using the Minimax, Sevadge, and Hurwicz
+ * based on a matrix of profits using the Minimax, Savage, and Hurwicz
  * criteria. Each function processes the input matrix to determine the optimal
  * solution based on specified decision-making rules.
  */
@@ -36,9 +36,9 @@ static constexpr T minimax(const std::array<std::array<T, columns>, rows>& profi
 }
 
 /**
- * @brief Calculates the Sevadge criterion.
+ * @brief Calculates the Savage criterion.
  *
- * The Sevadge criterion evaluates the profit matrix by subtracting
+ * The Savage criterion evaluates the profit matrix by subtracting
  * the maximum value of each column from the values in that column,
  * and then finds the minimum of the maximum profits from the resulting
  * adjusted matrix.
@@ -47,10 +47,10 @@ static constexpr T minimax(const std::array<std::array<T, columns>, rows>& profi
  * @tparam rows Number of rows in the profit matrix.
  * @tparam columns Number of columns in the profit matrix.
  * @param profits A 2D array representing the profit matrix.
- * @return The Sevadge value, which is the minimum of the maximum adjusted profits.
+ * @return The Savage value, which is the minimum of the maximum adjusted profits.
  */
 template<class T, size_t rows, size_t columns>
-static constexpr T sevadges(std::array<std::array<T, columns>, rows> profits) {
+static constexpr T savage(std::array<std::array<T, columns>, rows> profits) {
     for(auto col{ 0uz }; col < columns; ++col) {
         // Find the maximum value in the column.
         const T max_value{
@@ -120,11 +120,11 @@ int main() {
     };
 
     constexpr static auto minimax_value{ setm::minimax(profits) };
-    constexpr static auto sevadges_value{ setm::sevadges(profits) };
+    constexpr static auto savage_value{ setm::savage(profits) };
     constexpr static auto coefficient{ 0.8 };
     constexpr static auto hurwicz_value{ setm::hurwicz(profits, coefficient) };
 
     std::cout << "Minimax: " << minimax_value
-              << "\nSevadges: " << sevadges_value
+              << "\nSavage: " << savage_value
               << "\nHurwicz: " << hurwicz_value << '\n';
 }

@@ -2,7 +2,7 @@
 
 A C++ implementation of decision-making criteria based on profit matrices.
 
-This project includes methods for evaluating decisions using the **Minimax**, **Sevadge**, and **Hurwicz** criteria.
+This project includes methods for evaluating decisions using the **Minimax**, **Savage**, and **Hurwicz** criteria.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ The implemented criteria help in determining optimal solutions in scenarios with
 ## Criteria
 
 1. **Minimax (MM)**: Finds the maximum of the minimum profits, representing the best worst-case scenario.
-2. **Sevadge (S)**: Adjusts profits by subtracting the maximum value of each column, then finds the minimum of the maximum adjusted profits.
+2. **Savage (S)**: Adjusts profits by subtracting the maximum value of each column, then finds the minimum of the maximum adjusted profits.
 3. **Hurwicz (HW)**: Computes a weighted average of the minimum and maximum outcomes based on a specified coefficient.
 
 ## Installation
