@@ -1,10 +1,10 @@
 /**
- * @file decision_criteria.cpp
- * @brief Implements decision-making criteria for profit matrices.
+ * @file decision_criterion.cpp
+ * @brief Implements decision-making criterion for profit matrices.
  *
  * This module contains functions that evaluate decision-making strategies
  * based on a matrix of profits using the Minimax, Savage, and Hurwicz
- * criteria. Each function processes the input matrix to determine the optimal
+ * criterion. Each function processes the input matrix to determine the optimal
  * solution based on specified decision-making rules.
  */
 
@@ -103,10 +103,10 @@ static constexpr T hurwicz(const std::array<std::array<T, columns>, rows>& profi
 
 
 /**
- * @brief Main function to execute decision criteria calculations.
+ * @brief Main function to execute decision criterion calculations.
  *
  * This function initializes a profit matrix and calls the decision-making
- * criteria functions to compute and display their values.
+ * criterion functions to compute and display their values.
  */
 int main() {
     constexpr static auto columns{ 5uz };
