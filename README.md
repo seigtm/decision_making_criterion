@@ -36,7 +36,7 @@ You can clone the repository and compile it using the following commands:
 git clone https://github.com/seigtm/decision_making_criterion.git
 cd ./decision_making_criterion
 # Compile the code (adjust command based on your setup)
-clang++ -std=c++23 -o decision_criterion ./decision_criterion.cpp
+clang++ ./decision_criterion.cpp -o ./decision_criterion.o -std=c++23
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ clang++ -std=c++23 -o decision_criterion ./decision_criterion.cpp
 After compiling, you can run the executable:
 
 ```bash
-./decision_criterion
+./decision_criterion.o
 ```
 
 The program will output the results for each decision-making criterion based on the predefined profit matrix.
