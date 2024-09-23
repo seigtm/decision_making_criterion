@@ -21,11 +21,11 @@ namespace setm {
  * The Minimax criterion finds the maximum of the minimum profits for
  * each strategy. It represents the best worst-case scenario.
  *
- * @param rng A range of rows, where each row is a collection of profits.
+ * @param profits A range of rows, where each row is a collection of profits.
  * @return The Minimax value, which is the maximum of the minimum profits.
  */
-inline consteval auto minimax(const std::ranges::range auto& rng) {
-    return std::ranges::max(rng | std::views::transform([](const auto& row) {
+inline consteval auto minimax(const std::ranges::range auto& profits) {
+    return std::ranges::max(profits | std::views::transform([](const auto& row) {
                                 return *std::ranges::min_element(row);
                             }));
 }
