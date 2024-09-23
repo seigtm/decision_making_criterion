@@ -51,6 +51,6 @@ The program will output the results for each decision-making criterion based on 
 
 ## License
 
-This project is licensed under the **MIT License** - see the [LICENSE](https://github.com/seigtm/decision_making_criterion/tree/main/LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](https://github.com/seigtm/decision_making_criterion/tree/master/LICENSE) file for details.
 
 Feel free to modify the content to fit your specific needs and preferences!
