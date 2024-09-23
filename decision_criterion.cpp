@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <array>
 #include <iostream>
-#include <limits>
 #include <ranges>
 
 namespace setm {
@@ -22,15 +21,11 @@ namespace setm {
  * The Minimax criterion finds the maximum of the minimum profits for
  * each strategy. It represents the best worst-case scenario.
  *
- * @tparam T Type of the matrix elements.
- * @tparam rows Number of rows in the profit matrix.
- * @tparam columns Number of columns in the profit matrix.
- * @param profits A 2D array representing the profit matrix.
+ * @param rng A range of rows, where each row is a collection of profits.
  * @return The Minimax value, which is the maximum of the minimum profits.
  */
-template<class T, size_t rows, size_t columns>
-static constexpr T minimax(const std::array<std::array<T, columns>, rows>& profits) {
-    return std::ranges::max(profits | std::views::transform([](const auto& row) {
+inline consteval auto minimax(const std::ranges::range auto& rng) {
+    return std::ranges::max(rng | std::views::transform([](const auto& row) {
                                 return *std::ranges::min_element(row);
                             }));
 }
@@ -50,10 +45,10 @@ static constexpr T minimax(const std::array<std::array<T, columns>, rows>& profi
  * @return The Savage value, which is the minimum of the maximum adjusted profits.
  */
 template<class T, size_t rows, size_t columns>
-static constexpr T savage(std::array<std::array<T, columns>, rows> profits) {
+inline consteval T savage(std::array<std::array<T, columns>, rows> profits) {
     for(auto col{ 0uz }; col < columns; ++col) {
         // Find the maximum value in the column.
-        const T max_value{
+        const auto max_value{
             std::ranges::max(profits | std::views::transform([col](const auto& row) {
                                  return row[col];
                              }))
@@ -77,26 +72,17 @@ static constexpr T savage(std::array<std::array<T, columns>, rows> profits) {
  * and maximum outcomes for each strategy, where the weight is determined
  * by a specified coefficient.
  *
- * @tparam T Type of the matrix elements.
- * @tparam rows Number of rows in the profit matrix.
- * @tparam columns Number of columns in the profit matrix.
- * @param profits A 2D array representing the profit matrix.
+ * @param rng A range of rows, where each row is a collection of profits.
  * @param coefficient A weight value between 0 and 1 for the Hurwicz calculation.
  * @return The Hurwicz value, representing the best expected outcome
  *         based on the given coefficient.
  */
-template<class T, size_t rows, size_t columns>
-static constexpr T hurwicz(const std::array<std::array<T, columns>, rows>& profits, T coefficient) {
-    auto max_value{ std::numeric_limits<T>::lowest() };
-    for(const auto& row : profits) {
-        const auto min_outcome{ *std::ranges::min_element(row) };
-        const auto max_outcome{ *std::ranges::max_element(row) };
-        const auto hurwicz_value{ coefficient * min_outcome + (1 - coefficient) * max_outcome };
-
-        max_value = std::max(max_value, hurwicz_value);
-    }
-
-    return max_value;
+inline consteval auto hurwicz(const std::ranges::range auto& rng, std::floating_point auto coefficient) {
+    return std::ranges::max(rng | std::views::transform([coefficient](const auto& row) {
+                                const auto min_outcome{ *std::ranges::min_element(row) };
+                                const auto max_outcome{ *std::ranges::max_element(row) };
+                                return coefficient * min_outcome + (1 - coefficient) * max_outcome;
+                            }));
 }
 
 }  // namespace setm
@@ -109,20 +95,20 @@ static constexpr T hurwicz(const std::array<std::array<T, columns>, rows>& profi
  * criterion functions to compute and display their values.
  */
 int main() {
-    constexpr static auto columns{ 5uz };
-    constexpr static auto rows{ 4uz };
+    constexpr auto columns{ 5uz };
+    constexpr auto rows{ 4uz };
 
-    constexpr static std::array<std::array<double, columns>, rows> profits{
+    constexpr std::array<std::array<double, columns>, rows> profits{
         { { { 15, 10, 0, -6, 17 } },
           { { 3, 14, 8, 9, 2 } },
           { { 1, 5, 14, 20, -3 } },
           { { 7, 19, 10, 2, 0 } } }
     };
 
-    constexpr static auto minimax_value{ setm::minimax(profits) };
-    constexpr static auto savage_value{ setm::savage(profits) };
-    constexpr static auto coefficient{ 0.8 };
-    constexpr static auto hurwicz_value{ setm::hurwicz(profits, coefficient) };
+    constexpr auto minimax_value{ setm::minimax(profits) };
+    constexpr auto savage_value{ setm::savage(profits) };
+    constexpr auto coefficient{ 0.8 };
+    constexpr auto hurwicz_value{ setm::hurwicz(profits, coefficient) };
 
     std::cout << "Minimax: " << minimax_value
               << "\nSavage: " << savage_value
